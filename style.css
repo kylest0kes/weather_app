@@ -1,0 +1,44 @@
+html, body{
+    position: relative;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+header{
+    background-color: dimgrey;
+    color: whitesmoke;
+    text-align: center;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+aside{
+    background-color: rgb(238, 234, 234);
+    margin-right: 20px;
+    padding: 20px;
+    float: left;
+    width: 30%;
+    height: 85%;
+}
+
+.btn-outline-secondary{
+    background-color: steelblue;
+    color: white;
+}
+
+.mb-3{
+    width: 75%;
+}
+
+.card{
+    margin-bottom: 25px;
+}
+
+.user-city{
+    margin-bottom: 30px;
+}
+
+li{
+    display: inline;
+}
