@@ -13,12 +13,12 @@
     <aside>
         <h4>Search for a City:</h4>
         <div class="input-group mb-3">
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" id="user-seach-input">
             <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+                <button class="btn btn-outline-secondary" type="button" id="submit-search"><i class="fas fa-search"></i></button>
             </div>
         </div>
-        <div class="list-group">
+        <div class="list-group" id="user-search-list">
             <button type="button" class="list-group-item list-group-item-action">*Prepend Recently Searched Cities Buttons*</button>
             <button type="button" class="list-group-item list-group-item-action">*Prepend Recently Searched Cities Buttons*</button>
         </div>
@@ -26,11 +26,11 @@
 
     <div class="card">
         <div class="card-body">
-          <h3 class="user-city">*Add City (Current Date) Weather State Icon*</h3>
-          <p class="user-city-temp">Tempature: </p>
-          <p class="user-city-humidity">Humidity: </p>
-          <p class="user-city-wind">Wind Speed:</p>
-          <p class="user-city-uv">UV Index: (css for favorable, moderate, or severe conditions)</p>
+          <h3 class="user-city" id="user-city">*Add City (Current Date) Weather State Icon*</h3>
+          <p class="user-city-temp" id="user-city-temp">Temperature: </p>
+          <p class="user-city-humidity" id="user-city-humidity">Humidity: </p>
+          <p class="user-city-wind" id="user-city-wind">Wind Speed:</p>
+          <p class="user-city-uv" id="user-city-uv">UV Index: (css for favorable, moderate, or severe conditions)</p>
         </div>
     </div>
 
