@@ -1,61 +1,73 @@
 var userCityChoices = [];
-var APIKey = "d060452e40efa713305ce800a49affd2";
-var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=Orlando&appid=" + APIKey;  //how to set location as the user input 
-var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=27.95&lon=-82.46" //how to set location as the user input
+var APIKey = "d060452e40efa713305ce800a49affd2";  
 var fiveDayForecast = "https://api.openweathermap.org/data/2.5/forecast?q=Orlando&appid=" + APIKey;
 var city = $(this).attr('data-name');
 
 
 //ajax for name temp humidity and wind speed
-$.ajax({
-    url: weatherURL,
-    method: "GET"
-}).then(function(response){
-    console.log(response);
-    var cityName = response.name;
-    var tempF = (response.main.temp - 273.15) * 1.80 + 32;
-    var windSpeed = response.wind.speed;
-    var humidity = response.main.humidity;
-    var weatherState = response.weather[0].main;
 
-    //console.log(tempF)
-    //console.log(windSpeed)
-    //console.log(humidity)
-    //console.log(cityName)
-    //console.log(weatherState)
-
-    $('.user-city-name').html('<h3>' + cityName + " " + moment().format('L') + '</h3>');
-    $('.user-city-temp').text("Temperature: " + tempF.toFixed(1) + " ºF");
-    $('.user-city-humidity').text("Humidity: " + humidity + "%");
-    $('.user-city-wind').text("Wind Speed: " + windSpeed + " MPH");
-    
-})
 
 //ajax for uv index
-$.ajax({
-    url: uvURL,
-    method: "GET"
-}).then(function(response){
-    //console.log(response)
-    var uvIndex = response.value;
 
-    $('.user-city-uv').text("UV Index: " + uvIndex)
-})
 
 //ajax for 5 day forecast
-$.ajax({
+/*$.ajax({
     url: fiveDayForecast,
     method: "GET"
 }).then(function(response) {
     console.log(response)
-})
+}) */
 
 //on click to add user input intouserCityChoices array
 $('#submit-search').on('click', function(event) {
     event.preventDefault();
 
     var cityInput = $('#user-search-input').val();
-    userCityChoices.push(cityInput)
+    userCityChoices.push(cityInput);
+
+    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityInput + "&appid=" + APIKey;
+    
+
+    $.ajax({
+        url: weatherURL,
+        method: "GET"
+    }).then(function(response){
+        console.log(response);
+        var cityName = response.name;
+        var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+        var windSpeed = response.wind.speed;
+        var humidity = response.main.humidity;
+        var weatherState = response.weather[0].main;
+        var latValue = response.coord.lat;
+        var longValue = response.coord.lon;
+
+        //console.log(latValue);
+        //console.log(longValue);
+    
+        //console.log(tempF)
+        //console.log(windSpeed)
+        //console.log(humidity)
+        //console.log(cityName)
+        //console.log(weatherState)
+        $('.card-body').removeClass('hide')
+        $('.user-city-name').html('<h3>' + cityName + " " + moment().format('L') + '</h3>');
+        $('.user-city-temp').text("Temperature: " + tempF.toFixed(1) + " ºF");
+        $('.user-city-humidity').text("Humidity: " + humidity + "%");
+        $('.user-city-wind').text("Wind Speed: " + windSpeed + " MPH");
+
+        var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + latValue + "&lon=" + longValue;
+
+        $.ajax({
+            url: uvURL,
+            method: "GET"
+        }).then(function(response){
+            //console.log(response)
+            var uvIndex = response.value;
+        
+            $('.user-city-uv').text("UV Index: " + uvIndex)
+        })
+        
+    })
 
     renderButtons()
     storeCities()
