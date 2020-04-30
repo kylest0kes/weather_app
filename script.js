@@ -1,14 +1,9 @@
-var userCityChoices = [];
+var userCityChoices = JSON.parse(localStorage.getItem("cities")) || [];
 var APIKey = "d060452e40efa713305ce800a49affd2";  
 var fiveDayForecast = "https://api.openweathermap.org/data/2.5/forecast?q=Orlando&appid=" + APIKey;
-var city = $(this).attr('data-name');
+var city = "";
 
-
-//ajax for name temp humidity and wind speed
-
-
-//ajax for uv index
-
+renderButtons()
 
 //ajax for 5 day forecast
 /*$.ajax({
@@ -21,13 +16,40 @@ var city = $(this).attr('data-name');
 //on click to add user input intouserCityChoices array
 $('#submit-search').on('click', function(event) {
     event.preventDefault();
+    city = $('#user-search-input').val().trim();
+    if(!userCityChoices.includes(city)) userCityChoices.push(city);
 
-    var cityInput = $('#user-search-input').val();
-    userCityChoices.push(cityInput);
-
-    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityInput + "&appid=" + APIKey;
+    generateWeatherInfo()
+    renderButtons()
+    storeCities()
+    addCities()
     
+})
 
+//click event for buttons list
+$('#user-search-list').on("click", ".city-btn", function() {
+    city = $(this).attr("data-name")
+    generateWeatherInfo()
+}) 
+
+//renders the buttons in the list after user searches
+function renderButtons() {
+    $("#user-search-list").empty();
+    for (var i = 0; i < userCityChoices.length; i++) {
+        var cityButton = $('<button>');
+        cityButton.addClass('list-group-item list-group-item-action city-btn');
+        cityButton.attr('data-name', userCityChoices[i]);
+        cityButton.text(userCityChoices[i]);
+        $('#user-search-list').prepend(cityButton)
+    }
+}
+
+//function to generae weather info
+function generateWeatherInfo() {
+
+    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+    
+    //ajax for name temp humidity and wind speed
     $.ajax({
         url: weatherURL,
         method: "GET"
@@ -41,14 +63,7 @@ $('#submit-search').on('click', function(event) {
         var latValue = response.coord.lat;
         var longValue = response.coord.lon;
 
-        //console.log(latValue);
-        //console.log(longValue);
-    
-        //console.log(tempF)
-        //console.log(windSpeed)
-        //console.log(humidity)
-        //console.log(cityName)
-        //console.log(weatherState)
+        $('.card').removeClass('hide')
         $('.card-body').removeClass('hide')
         $('.user-city-name').html('<h3>' + cityName + " " + moment().format('L') + '</h3>');
         $('.user-city-temp').text("Temperature: " + tempF.toFixed(1) + " ºF");
@@ -57,6 +72,7 @@ $('#submit-search').on('click', function(event) {
 
         var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + latValue + "&lon=" + longValue;
 
+        //ajax for uv index
         $.ajax({
             url: uvURL,
             method: "GET"
@@ -69,26 +85,7 @@ $('#submit-search').on('click', function(event) {
         
     })
 
-    renderButtons()
-    storeCities()
-    addCities()
-    
-})
-
-//renders the buttons in the list after user searches
-function renderButtons() {
-    $("#user-search-list").empty();
-    for (var i = 0; i < userCityChoices.length; i++) {
-        var cityButton = $('<button>');
-        cityButton.addClass('list-group-item list-group-item-action');
-        cityButton.attr('data-name', userCityChoices[i]);
-        cityButton.text(userCityChoices[i]);
-        $('#user-search-list').prepend(cityButton)
-    }
 }
-
-
-
 
 
 //store cities in local storage (WORKS)
@@ -99,7 +96,7 @@ function storeCities() {
 
 //render stored items into page (DOESNT WORK)
 function addCities() {
-    var storedCities = JSON.parse(localStorage.getItem("cities"));
+    var storedCities = JSON.parse(localStorage.getItem("cities")); /********/
   
     if (storedCities !== null) {
       userCityChoices = storedCities;
