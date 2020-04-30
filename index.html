@@ -10,38 +10,44 @@
 </head>
 <body>
     <header><h1>Weather Dashboard</h1></header>
-    <aside>
-        <h4>Search for a City:</h4>
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" id="user-search-input">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="submit-search"><i class="fas fa-search"></i></button>
+    
+    <div class="container-fluid">
+        <div class="col-4">
+            <h4>Search for a City:</h4>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="user-search-input">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="submit-search"><i class="fas fa-search"></i></button>
+                </div>
             </div>
+            <div class="list-group" id="user-search-list"></div>
         </div>
-        <div class="list-group" id="user-search-list"></div>
-    </aside>
-
-    <div class="card">
-        <div class="card-body">
-          <h3 class="user-city" id="user-city">*Add City (Current Date) Weather State Icon*</h3>
-          <p class="user-city-temp" id="user-city-temp">Temperature: </p>
-          <p class="user-city-humidity" id="user-city-humidity">Humidity: </p>
-          <p class="user-city-wind" id="user-city-wind">Wind Speed:</p>
-          <p class="user-city-uv" id="user-city-uv">UV Index: (css for favorable, moderate, or severe conditions)</p>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                  <h3 class="user-city" id="user-city">*Add City (Current Date) Weather State Icon*</h3>
+                  <p class="user-city-temp" id="user-city-temp">Temperature: </p>
+                  <p class="user-city-humidity" id="user-city-humidity">Humidity: </p>
+                  <p class="user-city-wind" id="user-city-wind">Wind Speed:</p>
+                  <p class="user-city-uv" id="user-city-uv">UV Index: (css for favorable, moderate, or severe conditions)</p>
+                </div>
+            </div>
+        
+            <h4>5-Day Forecast:</h4>
+            <ul id="5-day-forecast">
+                <li>next day forecast,</li>
+                <li>following day 2,</li>
+                <li>following day 3,</li>
+                <li>following day 4,</li>
+                <li>following day 5</li>
+            </ul>
         </div>
     </div>
-
-    <h4>5-Day Forecast:</h4>
-    <ul id="5-day-forecast">
-        <li>next day forecast,</li>
-        <li>following day 2,</li>
-        <li>following day 3,</li>
-        <li>following day 4,</li>
-        <li>following day 5</li>
-    </ul>
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+
+

@@ -1,5 +1,4 @@
 html, body{
-    position: relative;
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -13,20 +12,23 @@ header{
     margin-bottom: 20px;
 }
 
-aside{
+.col-4{
     background-color: rgb(238, 234, 234);
-    margin-right: 20px;
-    margin-left: 20px;
     padding: 20px;
     float: left;
-    width: 30%;
-    height: 85%;
     border-radius: 6px;
 }
 
 .btn-outline-secondary{
     background-color: steelblue;
     color: white;
+}
+.container-fluid{
+ 
+}
+
+.col-8{
+    float: right;
 }
 
 .mb-3{
@@ -35,7 +37,10 @@ aside{
 
 .card{
     margin-bottom: 25px;
-    margin-right: 20px;
+}
+
+ul{
+    padding-left: 0;
 }
 
 .user-city{
