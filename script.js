@@ -1,13 +1,14 @@
 var userCityChoices = [];
 var APIKey = "d060452e40efa713305ce800a49affd2";
-var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=Orlando&appid=" + APIKey;
+var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=Tampa&appid=" + APIKey;
+var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=27.95&lon=-82.46"
 var city = $(this).attr('data-name');
 
 $.ajax({
     url: weatherURL,
     method: "GET"
 }).then(function(response){
-    console.log(response);
+    //console.log(response);
     var cityName = response.name;
     var tempF = (response.main.temp - 273.15) * 1.80 + 32;
     var windSpeed = response.wind.speed;
@@ -16,8 +17,23 @@ $.ajax({
     //console.log(tempF)
     //console.log(windSpeed)
     //console.log(humidity)
-    console.log(cityName)
+    //console.log(cityName)
 
+    $('.user-city-name').html('<h3>' + cityName + '</h3>');
+    $('.user-city-temp').text("Temperature (F: ): " + tempF);
+    $('.user-city-humidity').text("Humidity %: " + humidity);
+    $('.user-city-wind').text("Wind Speed: " + windSpeed);
+    
+})
+
+$.ajax({
+    url: uvURL,
+    method: "GET"
+}).then(function(response){
+    //console.log(response)
+    var uvIndex = response.value;
+
+    $('.user-city-uv').text("UV Index: " + uvIndex)
 })
 
 //on click to add user input intouserCityChoices array
@@ -27,13 +43,10 @@ $('#submit-search').on('click', function(event) {
     var cityInput = $('#user-search-input').val();
     userCityChoices.push(cityInput)
 
-   
     renderButtons()
     storeCities()
     addCities()
     
-
-
 })
 
 //renders the buttons in the list after user searches
@@ -48,10 +61,17 @@ function renderButtons() {
     }
 }
 
+
+
+
+
+//store cities in local storage
 function storeCities() {
     localStorage.setItem("cities", JSON.stringify(userCityChoices));
 }
 
+
+//render stored items into page
 function addCities() {
     var storedCities = JSON.parse(localStorage.getItem("cities"));
   
