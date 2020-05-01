@@ -1,17 +1,36 @@
 var userCityChoices = JSON.parse(localStorage.getItem("cities")) || [];
 var APIKey = "d060452e40efa713305ce800a49affd2";  
 var fiveDayForecast = "https://api.openweathermap.org/data/2.5/forecast?q=Orlando&appid=" + APIKey;
-var city = "";
+var city = userCityChoices[userCityChoices.length - 1] || "";
 
-renderButtons()
+if(city){
+    renderButtons()
+    generateWeatherInfo()
+    //console.log(city)
+}
 
 //ajax for 5 day forecast
-/*$.ajax({
+$.ajax({
     url: fiveDayForecast,
     method: "GET"
 }).then(function(response) {
-    console.log(response)
-}) */
+    //console.log(response)
+    for(var i = 0; i < response.list.length; i++) {
+        if(response.list[i].dt_txt.includes("15:00:00")) {
+            //console.log(response.list[i])
+            var date = moment(response.list[i].dt_txt.split(" ")[0], "YYYY-MM-DD").format('M/D/YYYY')
+            //console.log(date)
+            var icon = "https://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png"
+           //console.log(icon)
+            var temp = (response.list[i].main.temp - 273.15) * 1.80 + 32;
+            //console.log(temp)
+            var humidity = response.list[i].main.humidity
+            //console.log(humidity)
+        }
+    }
+
+}) 
+//loop thru if(response.list[i].dt_txt.includes("15:00:00")), look for including .dt_txt: .includes "15:00:00"
 
 //on click to add user input intouserCityChoices array
 $('#submit-search').on('click', function(event) {
