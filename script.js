@@ -30,7 +30,6 @@ $.ajax({
     }
 
 }) 
-//loop thru if(response.list[i].dt_txt.includes("15:00:00")), look for including .dt_txt: .includes "15:00:00"
 
 //on click to add user input intouserCityChoices array
 $('#submit-search').on('click', function(event) {
@@ -78,13 +77,14 @@ function generateWeatherInfo() {
         var tempF = (response.main.temp - 273.15) * 1.80 + 32;
         var windSpeed = response.wind.speed;
         var humidity = response.main.humidity;
-        var weatherState = response.weather[0].main;
+        var weatherState = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
         var latValue = response.coord.lat;
         var longValue = response.coord.lon;
+        console.log(weatherState)
 
         $('.card').removeClass('hide')
         $('.card-body').removeClass('hide')
-        $('.user-city-name').html('<h3>' + cityName + " " + moment().format('L') + '</h3>');
+        $('.user-city-name').html('<h3>' + cityName + " " + moment().format('L') + '</h3>' + '<img src=' + weatherState + '>');
         $('.user-city-temp').text("Temperature: " + tempF.toFixed(1) + " ºF");
         $('.user-city-humidity').text("Humidity: " + humidity + "%");
         $('.user-city-wind').text("Wind Speed: " + windSpeed + " MPH");
