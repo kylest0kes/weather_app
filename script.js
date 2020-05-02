@@ -1,34 +1,11 @@
 var userCityChoices = JSON.parse(localStorage.getItem("cities")) || [];
 var APIKey = "d060452e40efa713305ce800a49affd2";  
-var fiveDayForecast = "https://api.openweathermap.org/data/2.5/forecast?q=Orlando&appid=" + APIKey;
 var city = userCityChoices[userCityChoices.length - 1] || "";
 
 if(city){
     renderButtons();
     generateWeatherInfo();
 }
-
-//ajax for 5 day forecast
-$.ajax({
-    url: fiveDayForecast,
-    method: "GET"
-}).then(function(response) {
-    //console.log(response)
-    for(var i = 0; i < response.list.length; i++) {
-        if(response.list[i].dt_txt.includes("15:00:00")) {
-            //console.log(response.list[i])
-            var date = moment(response.list[i].dt_txt.split(" ")[0], "YYYY-MM-DD").format('M/D/YYYY');
-            //console.log(date)
-            var icon = "https://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png";
-           //console.log(icon)
-            var temp = (response.list[i].main.temp - 273.15) * 1.80 + 32;
-            //console.log(temp)
-            var humidity = response.list[i].main.humidity;
-            //console.log(humidity)
-        }
-    }
-
-}) 
 
 //on click to add user input intouserCityChoices array
 $('#submit-search').on('click', function(event) {
@@ -99,9 +76,64 @@ function generateWeatherInfo() {
         
     })
 
+    var fiveDayForecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
+
+    //ajax for 5 day forecast
+    $.ajax({
+        url: fiveDayForecast,
+        method: "GET"
+    }).then(function(response) {
+        //console.log(response)
+        //$("#five-day-forecast-row").empty();
+        for(var i = 0; i < response.list.length; i++) {
+            if(response.list[i].dt_txt.includes("15:00:00")) {
+                //console.log(response.list[i])
+                var date = moment(response.list[i].dt_txt.split(" ")[0], "YYYY-MM-DD").format('M/D/YYYY');
+                //console.log(date)
+                var icon = "https://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png";
+                //console.log(icon)
+                var temp = (response.list[i].main.temp - 273.15) * 1.80 + 32;
+                //console.log(temp)
+                var humidity = response.list[i].main.humidity;
+                //console.log(humidity)
+
+                var fiveDayCol = $('<div>').addClass('col');
+                var fiveDayCard = $('<div>').addClass('card five-day-card');
+                var fiveDayCardBody = $('<div>').addClass('card-body five-day-card-body')
+                var fiveDayDate = $('<h4>').text(date);
+                var fiveDayIcon = $('<img>').attr('src', icon);
+                var fiveDayTemp = $('<p>').text('Temp: ' + temp.toFixed(2) + ' ºF');
+                var fiveDayHumidity = $('<p>').text('Humidity' + humidity + '%');
+
+                
+                $('#five-day-forecast-row').append(fiveDayCol);
+                fiveDayCol.append(fiveDayCard);
+                fiveDayCard.append(fiveDayCardBody);
+                fiveDayCardBody.append(fiveDayDate).append(fiveDayIcon).append(fiveDayTemp).append(fiveDayHumidity);
+                
+
+            }
+        }
+        
+        $('.five-day-forecast').removeClass('hide');
+    }) 
+
 }
 
 //store cities in local storage (WORKS)
 function storeCities() {
     localStorage.setItem("cities", JSON.stringify(userCityChoices));
 }
+
+
+// layout being created in loop of 5 day forecast
+/*  <div class="col">
+        <div class="card five-day-card" id="five-day-forecast-card">
+            <div class="card-body">
+                <h4 class="five-day-date" id="five-day-date"></h4>
+                <div class="five-day-icon" id="five-day-icon"></div>
+                <p class="five-day-temp" id="five-day-temp"></p>
+                <p class="five-day-humidity" id="five-day-humidity"></p>
+            </div>
+        </div>
+    </div> */

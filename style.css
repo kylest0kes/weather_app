@@ -28,6 +28,18 @@ header{
     float: right;
 }
 
+h4{
+    color: white;
+}
+
+p{
+    color: white;
+}
+
+h6{
+    line-height: 40px;
+}
+
 .mb-3{
     width: 90%;
 }
@@ -44,10 +56,11 @@ ul{
     margin-bottom: 30px;
 }
 
-ul li{
-    display: inline;
-}
-
 .hide{
     display: none;
+}
+
+.five-day-card{
+    background-color: steelblue; 
+    width: 10rem;
 }
