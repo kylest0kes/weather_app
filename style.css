@@ -67,12 +67,15 @@ ul{
 
 .user-city-uv-severe{
     background-color: red;
+    width: 140px;
 }
 
 .user-city-uv-moderate{
     background-color: yellow;
+    width: 140px;
 }
 
 .user-city-uv-favorable{
     background-color: green;
+    width: 140px;
 }

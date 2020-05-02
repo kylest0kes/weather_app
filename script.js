@@ -7,7 +7,7 @@ if(city){
     generateWeatherInfo();
 }
 
-//on click to add user input intouserCityChoices array
+//on click to add user input into userCityChoices array
 $('#submit-search').on('click', function(event) {
     event.preventDefault();
     city = $('#user-search-input').val().trim();
@@ -16,7 +16,6 @@ $('#submit-search').on('click', function(event) {
     generateWeatherInfo();
     renderButtons();
     storeCities();
-    addCities();
     
 })
 
@@ -38,7 +37,7 @@ function renderButtons() {
     }
 }
 
-//function to generae weather info
+//function to generate weather info
 function generateWeatherInfo() {
 
     var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
@@ -72,11 +71,11 @@ function generateWeatherInfo() {
         }).then(function(response){
             var uvIndex = response.value;
             if(uvIndex >= 8){
-                $('.user-city-uv').text("UV Index: " + uvIndex).attr('src', 'user-city-uv-severe'); 
-            } else if (uvIndex < 8 || uvIndex >= 5) {
-                $('.user-city-uv').text("UV Index: " + uvIndex).attr('src', 'user-city-uv-moderate');
-            } else {
-                $('.user-city-uv').text("UV Index: " + uvIndex).attr('src', 'user-city-uv-favorable');
+                $('#user-city-uv').text("UV Index: " + uvIndex).attr('class', 'user-city-uv-severe'); //missing something to change the uv index to whatever is currently on 
+            } else if (uvIndex >= 5) {
+                $('#user-city-uv').text("UV Index: " + uvIndex).attr('class', 'user-city-uv-moderate'); //missing something to change the uv index to whatever is currently on
+            } else{
+                $('#user-city-uv').text("UV Index: " + uvIndex).attr('class', 'user-city-uv-favorable'); //**missing something to change the uv index to whatever is currently on *color doesnt change to green in favorable uv index (sydney)
             }
         }) 
     })
@@ -88,7 +87,7 @@ function generateWeatherInfo() {
         url: fiveDayForecast,
         method: "GET"
     }).then(function(response) {
-        //$("#five-day-forecast-row").empty();
+        $("#five-day-forecast-row").empty();
         for(var i = 0; i < response.list.length; i++) {
             if(response.list[i].dt_txt.includes("15:00:00")) {
                 var date = moment(response.list[i].dt_txt.split(" ")[0], "YYYY-MM-DD").format('M/D/YYYY');
@@ -102,7 +101,7 @@ function generateWeatherInfo() {
                 var fiveDayDate = $('<h4>').text(date);
                 var fiveDayIcon = $('<img>').attr('src', icon);
                 var fiveDayTemp = $('<p>').text('Temp: ' + temp.toFixed(2) + ' ºF');
-                var fiveDayHumidity = $('<p>').text('Humidity' + humidity + '%');
+                var fiveDayHumidity = $('<p>').text('Humidity: ' + humidity + '%');
 
                 
                 $('#five-day-forecast-row').append(fiveDayCol);
@@ -112,7 +111,6 @@ function generateWeatherInfo() {
                 
             }
         }
-        
         $('.five-day-forecast').removeClass('hide');
     }) 
 
