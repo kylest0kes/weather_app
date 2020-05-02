@@ -71,11 +71,11 @@ function generateWeatherInfo() {
         }).then(function(response){
             var uvIndex = response.value;
             if(uvIndex >= 8){
-                $('#user-city-uv').text("UV Index: " + uvIndex).attr('class', 'user-city-uv-severe'); //missing something to change the uv index to whatever is currently on 
+                $('#user-city-uv').text("UV Index: " + uvIndex).attr('class', 'user-city-uv-severe');  
             } else if (uvIndex >= 5) {
-                $('#user-city-uv').text("UV Index: " + uvIndex).attr('class', 'user-city-uv-moderate'); //missing something to change the uv index to whatever is currently on
+                $('#user-city-uv').text("UV Index: " + uvIndex).attr('class', 'user-city-uv-moderate'); 
             } else{
-                $('#user-city-uv').text("UV Index: " + uvIndex).attr('class', 'user-city-uv-favorable'); //**missing something to change the uv index to whatever is currently on *color doesnt change to green in favorable uv index (sydney)
+                $('#user-city-uv').text("UV Index: " + uvIndex).attr('class', 'user-city-uv-favorable');  
             }
         }) 
     })
