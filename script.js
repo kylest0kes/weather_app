@@ -71,9 +71,14 @@ function generateWeatherInfo() {
             method: "GET"
         }).then(function(response){
             var uvIndex = response.value;
-            $('.user-city-uv').text("UV Index: " + uvIndex);
-        })
-        
+            if(uvIndex >= 8){
+                $('.user-city-uv').text("UV Index: " + uvIndex).attr('src', 'user-city-uv-severe'); 
+            } else if (uvIndex < 8 || uvIndex >= 5) {
+                $('.user-city-uv').text("UV Index: " + uvIndex).attr('src', 'user-city-uv-moderate');
+            } else {
+                $('.user-city-uv').text("UV Index: " + uvIndex).attr('src', 'user-city-uv-favorable');
+            }
+        }) 
     })
 
     var fiveDayForecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
@@ -83,19 +88,13 @@ function generateWeatherInfo() {
         url: fiveDayForecast,
         method: "GET"
     }).then(function(response) {
-        //console.log(response)
         //$("#five-day-forecast-row").empty();
         for(var i = 0; i < response.list.length; i++) {
             if(response.list[i].dt_txt.includes("15:00:00")) {
-                //console.log(response.list[i])
                 var date = moment(response.list[i].dt_txt.split(" ")[0], "YYYY-MM-DD").format('M/D/YYYY');
-                //console.log(date)
                 var icon = "https://openweathermap.org/img/w/" + response.list[i].weather[0].icon + ".png";
-                //console.log(icon)
                 var temp = (response.list[i].main.temp - 273.15) * 1.80 + 32;
-                //console.log(temp)
                 var humidity = response.list[i].main.humidity;
-                //console.log(humidity)
 
                 var fiveDayCol = $('<div>').addClass('col');
                 var fiveDayCard = $('<div>').addClass('card five-day-card');
@@ -111,7 +110,6 @@ function generateWeatherInfo() {
                 fiveDayCard.append(fiveDayCardBody);
                 fiveDayCardBody.append(fiveDayDate).append(fiveDayIcon).append(fiveDayTemp).append(fiveDayHumidity);
                 
-
             }
         }
         
@@ -120,20 +118,7 @@ function generateWeatherInfo() {
 
 }
 
-//store cities in local storage (WORKS)
+//store cities in local storage
 function storeCities() {
     localStorage.setItem("cities", JSON.stringify(userCityChoices));
 }
-
-
-// layout being created in loop of 5 day forecast
-/*  <div class="col">
-        <div class="card five-day-card" id="five-day-forecast-card">
-            <div class="card-body">
-                <h4 class="five-day-date" id="five-day-date"></h4>
-                <div class="five-day-icon" id="five-day-icon"></div>
-                <p class="five-day-temp" id="five-day-temp"></p>
-                <p class="five-day-humidity" id="five-day-humidity"></p>
-            </div>
-        </div>
-    </div> */

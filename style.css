@@ -64,3 +64,15 @@ ul{
     background-color: steelblue; 
     width: 10rem;
 }
+
+.user-city-uv-severe{
+    background-color: red;
+}
+
+.user-city-uv-moderate{
+    background-color: yellow;
+}
+
+.user-city-uv-favorable{
+    background-color: green;
+}
