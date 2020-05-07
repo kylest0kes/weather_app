@@ -62,7 +62,7 @@ function generateWeatherInfo() {
         $('.user-city-humidity').text("Humidity: " + humidity + "%");
         $('.user-city-wind').text("Wind Speed: " + windSpeed + " MPH");
 
-        var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + latValue + "&lon=" + longValue;
+        var uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + latValue + "&lon=" + longValue;
 
         //ajax for uv index
         $.ajax({
