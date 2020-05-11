@@ -1,2 +1,2 @@
 # weather_app
-hw6
+If there is one thing that is ever-changing in our lives, it is the weather.  We are always trying to stay up to date on it, as it can effect, and possible ruin our plans.  But with this weather dashboard application, I have made it my goal to assist in making the user aware of the weather, for whatever location they should choose.  And with this application, you are able to not only view a locations weather, but then save that location for your later viewing, and within that view, the user is also presented with the 5 day forecast for thier chosen location.
